@@ -10,14 +10,14 @@ const StarMarket = (function() {
                 return;
             }
 
-            // Firebase bazangizdan ma'lumot olish
+            // Firebase bazangiz URL manzili
             const dbUrl = "https://magnetic-alloy-467611-u7-default-rtdb.firebaseio.com/apps.json";
 
             fetch(dbUrl)
             .then(res => res.json())
             .then(data => {
                 if (!data) {
-                    container.innerHTML = "<p>Ilovalar topilmadi.</p>";
+                    container.innerHTML = "<p>Hozircha ilovalar mavjud emas.</p>";
                     return;
                 }
 
@@ -27,7 +27,7 @@ const StarMarket = (function() {
                     const app = data[key];
                     html += `
                         <div style="text-align: center; background: #fff; padding: 10px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                            <img src="${app.image}" style="width: 70px; height: 70px; border-radius: 18%; object-fit: cover; display: block; margin: 0 auto;">
+                            <img src="${app.image}" style="width: 70px; height: 70px; border-radius: 18%; object-fit: cover;">
                             <div style="font-size: 13px; margin-top: 8px; font-weight: 500; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                 ${app.name}
                             </div>
@@ -37,11 +37,11 @@ const StarMarket = (function() {
                 
                 html += '</div>';
                 container.innerHTML = html;
-                console.log("Ilovalar muvaffaqiyatli yuklandi!");
+                console.log("Ilovalar yuklandi.");
             })
             .catch(err => {
                 console.error("SDK Xatosi:", err);
-                container.innerHTML = "<p style='color:red;'>Yuklashda xatolik!</p>";
+                container.innerHTML = "<p style='color:red;'>Yuklashda xatolik yuz berdi.</p>";
             });
         }
     };
