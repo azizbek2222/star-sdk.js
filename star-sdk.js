@@ -10,13 +10,11 @@ const StarMarket = (function() {
                 return;
             }
 
+            // Firebase bazangizdan ma'lumot olish
             const dbUrl = "https://magnetic-alloy-467611-u7-default-rtdb.firebaseio.com/apps.json";
 
             fetch(dbUrl)
-            .then(res => {
-                if (!res.ok) throw new Error("Tarmoq xatosi");
-                return res.json();
-            })
+            .then(res => res.json())
             .then(data => {
                 if (!data) {
                     container.innerHTML = "<p>Ilovalar topilmadi.</p>";
@@ -28,21 +26,22 @@ const StarMarket = (function() {
                 for (let key in data) {
                     const app = data[key];
                     html += `
-                        <div style="text-align: center; background: #fff; padding: 10px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                            <img src="${app.image}" style="width: 70px; height: 70px; border-radius: 18%; object-fit: cover;">
+                        <div style="text-align: center; background: #fff; padding: 10px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <img src="${app.image}" style="width: 70px; height: 70px; border-radius: 18%; object-fit: cover; display: block; margin: 0 auto;">
                             <div style="font-size: 13px; margin-top: 8px; font-weight: 500; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                 ${app.name}
                             </div>
-                            <a href="${app.link}" target="_blank" style="display: inline-block; margin-top: 8px; padding: 4px 12px; background: #01875f; color: white; text-decoration: none; border-radius: 6px; font-size: 11px;">O'rnatish</a>
+                            <a href="${app.link}" target="_blank" style="display: inline-block; margin-top: 8px; padding: 4px 12px; background: #01875f; color: white; text-decoration: none; border-radius: 6px; font-size: 11px; font-weight: bold;">O'rnatish</a>
                         </div>`;
                 }
                 
                 html += '</div>';
                 container.innerHTML = html;
+                console.log("Ilovalar muvaffaqiyatli yuklandi!");
             })
             .catch(err => {
                 console.error("SDK Xatosi:", err);
-                container.innerHTML = "<p style='color:red;'>Yuklashda xatolik yuz berdi.</p>";
+                container.innerHTML = "<p style='color:red;'>Yuklashda xatolik!</p>";
             });
         }
     };
